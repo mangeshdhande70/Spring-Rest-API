@@ -1,0 +1,51 @@
+package in.ineuron.dbconfig.product;
+
+import java.util.HashMap;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+	entityManagerFactoryRef= "db1EntityManagerFactory",
+	transactionManagerRef = "db1TransactionManager",
+	basePackages = "in.ineuron.repo.customer"
+)
+public class Db2Config {
+	
+	    @Value("${spring.data.mongodb.host}")
+	    private String host;
+
+	    @Value("${spring.data.mongodb.port}")
+	    private int port;
+
+	    @Value("${spring.data.mongodb.database}")
+	    private String database;
+
+	    @Bean
+	    public MongoClient mongoClient() {
+	        return MongoClients.create(String.format("mongodb://%s:%d", host, port));
+	    }
+
+	    @Bean(name = "mongoTemplate")
+	    public MongoTemplate mongoTemplate() {
+	        return new MongoTemplate(mongoClient(), database);
+	    }
+}

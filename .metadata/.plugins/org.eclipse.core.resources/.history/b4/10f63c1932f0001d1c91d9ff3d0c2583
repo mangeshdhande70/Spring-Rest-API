@@ -1,0 +1,10 @@
+package in.ineuron.mail;
+
+import java.util.Set;
+
+public interface IMailSender {
+	
+	public String mailSend(EmailDetails details, Set<String> mailIds);
+	public String sendMailWithAttachment(EmailDetails details)
+
+}

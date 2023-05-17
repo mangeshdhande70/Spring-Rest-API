@@ -1,0 +1,16 @@
+package in.ineuron.service;
+
+import java.util.List;
+
+import in.ineuron.model.Person;
+import in.ineuron.model.PhoneNumber;
+
+public interface IPersoneService {
+	
+	public Integer savePersonaDetails(Person person);
+	
+	public String savePhoneNumberWithPersonDetails(Iterable<PhoneNumber> number);
+	
+	public Iterable<Person> getAllPersonDetails();
+
+}

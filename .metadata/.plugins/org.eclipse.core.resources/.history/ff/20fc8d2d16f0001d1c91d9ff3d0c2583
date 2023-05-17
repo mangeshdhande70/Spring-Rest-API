@@ -1,0 +1,54 @@
+package in.ineuron.model;
+
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+public class Person {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@NonNull
+	private String name;
+	
+	@NonNull
+	private Integer age;
+	
+	
+	
+	@OneToMany(targetEntity = PhoneNumber.class , cascade = CascadeType.ALL ,mappedBy = "person" , fetch = FetchType.EAGER)
+	private Set<PhoneNumber> phoneNumbers;
+
+
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", age=" + age;
+	}
+	
+	
+	
+	
+	
+}

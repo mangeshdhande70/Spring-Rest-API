@@ -1,0 +1,21 @@
+package in.ineuron;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import in.ineuron.controller.MyController;
+
+@SpringBootApplication
+public class SpringRest20MultiDbConfigurationApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext context = SpringApplication.run(SpringRest20MultiDbConfigurationApplication.class, args);
+	
+		MyController bean = context.getBean(MyController.class);
+		bean.getProduct();
+	
+	}
+
+}

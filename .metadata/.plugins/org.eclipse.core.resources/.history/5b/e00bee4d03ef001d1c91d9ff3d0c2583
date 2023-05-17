@@ -1,0 +1,9 @@
+package in.ineuron.repo.product;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import in.ineuron.model.product.Product;
+
+public interface IProductDao extends MongoRepository<Product, Long> {
+
+}

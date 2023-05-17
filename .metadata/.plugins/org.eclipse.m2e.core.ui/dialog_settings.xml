@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="D:\mangesh.dhande\OneDrive - Infosys Limited\Desktop\Ineuron course\Notes\Spring Framework\SpringRest\4-may\SpringDataJPA-04_05_2023\SpringDataJpa-MultipleDbConfiguration"/>
+			<item value="D:\mangesh.dhande\OneDrive - Infosys Limited\Desktop\Ineuron course\Notes\Spring Framework\SpringRest\SpringRestSource_code_26_04_2023\SpringRest-03-DifferentMethodsPOC"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+</section>

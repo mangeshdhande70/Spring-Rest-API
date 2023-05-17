@@ -1,0 +1,68 @@
+package in.ineuron.service;
+
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.ineuron.dao.IPersonDao;
+import in.ineuron.dao.IPhoneDao;
+import in.ineuron.model.Person;
+import in.ineuron.model.PhoneNumber;
+
+@Service
+public class PersoneServiceImpl implements IPersoneService {
+	
+	@Autowired
+	private IPersonDao repo;
+	
+	@Autowired
+	private IPhoneDao phoneRepo;
+
+	@Override
+	public Integer savePersonaDetails(Person person) {
+
+		Person person2 = repo.save(person);
+		return person2.getId();
+	}
+
+	@Override
+	public String savePhoneNumberWithPersonDetails(Iterable<PhoneNumber> number) {
+		
+		for(PhoneNumber phoneNumber : number) {
+			
+			phoneRepo.save(phoneNumber);
+			
+		}
+		return ((Set<PhoneNumber>) number).size()+" no of phonumbers are added";
+	
+	}
+
+	//Getting Info By Parent
+	@Override
+	public Iterable<Person> getAllPersonDetails() {
+		return repo.findAll();
+	}
+
+	
+	//Getting Info By Child
+	@Override
+	public Iterable<PhoneNumber> getAllPersonDetailsByPhone() {
+		return phoneRepo.findAll();
+	}
+
+	@Override
+	public String deleteByPerson(Integer id) {
+	
+		Optional<Person> optional = repo.findById(id);
+		
+		if (optional.isPresent()) {
+			repo.deleteById(id);
+			return "Successfullt deleted Person Details with id :: "+id;
+		}
+		
+		return "Person Not Found With given id :: "+id;
+	}
+
+}

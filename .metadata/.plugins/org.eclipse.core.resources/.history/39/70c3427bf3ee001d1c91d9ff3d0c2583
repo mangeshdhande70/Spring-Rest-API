@@ -1,0 +1,5 @@
+package in.ineuron.dbconfig.product;
+
+public class MongoClient {
+
+}

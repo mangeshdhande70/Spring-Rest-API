@@ -1,0 +1,8 @@
+package in.ineuron.mail;
+
+public interface IMailSenderService {
+	
+	public String sendSimpleMail(EmailDetails details);
+	public String sendMailWithAttachment(EmailDetails details);
+
+}

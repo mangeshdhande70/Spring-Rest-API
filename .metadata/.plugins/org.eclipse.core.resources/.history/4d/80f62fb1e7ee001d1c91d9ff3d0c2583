@@ -1,0 +1,13 @@
+
+
+##My-Sql DB Config
+spring.datasource1.driver-class-name= com.mysql.cj.jdbc.Driver
+spring.datasource1.url= jdbc:mysql:///springrest
+spring.datasource1.username = root
+spring.datasource1.password = Md7$#1998
+
+
+
+##MongoDB Config
+spring.data2.mongodb.uri=mongodb+srv://<username>:<pwd>@<cluster>.mongodb.net/mygrocerylist
+spring.data2.mongodb.database=mygrocerylist

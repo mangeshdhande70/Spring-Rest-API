@@ -1,0 +1,58 @@
+package in.ineuron.dbconfig.customer;
+
+import java.util.HashMap;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+	entityManagerFactoryRef= "db1EntityManagerFactory",
+	transactionManagerRef = "db1TransactionManager",
+	basePackages = "in.ineuron.repo.customer"
+)
+public class Db1Config {
+	
+	//DataSource Object
+	@Bean
+	@ConfigurationProperties(value = "spring.datasource1")
+	public DataSource db1Configuration() {
+		return DataSourceBuilder.create().build();
+	}
+
+	//EntityManagerFactory
+	@Bean
+	public LocalContainerEntityManagerFactoryBean db1EntityManagerFactory(EntityManagerFactoryBuilder emfb) {
+		
+		HashMap<String, Object> properties = new HashMap<>();
+		properties.put("hibernate.hbm2ddl", "update");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.formate_sql", "true");
+		
+		return emfb.dataSource(db1Config()).packages("in.ineuron").persistenceUnit("springrest").build();
+		
+		
+	}
+	
+	
+	// Transaction Management
+	@Bean
+	public PlatformTransactionManager db1TransactionManager(EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
+	}
+	
+	
+}

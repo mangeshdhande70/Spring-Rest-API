@@ -1,0 +1,15 @@
+package in.ineuron.dbconfig.product;
+
+@Configuration
+public class MongoConfig {
+
+    @Value("${spring.data.mongodb.uri}")
+    private String connectionString;
+
+    @Bean
+    public MongoClient mongoClient() {
+        MongoClientURI uri = new MongoClientURI(connectionString);
+        return new MongoClient(uri);
+    }
+}
+

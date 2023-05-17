@@ -1,0 +1,39 @@
+package in.ineuron.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.ineuron.model.customer.Customer;
+import in.ineuron.model.product.Product;
+import in.ineuron.repo.customer.ICustomerDao;
+import in.ineuron.repo.product.IProductDao;
+
+@Controller
+public class MyController {
+	
+//	@Autowired
+//    private IProductDao iProductDao;
+//	
+//	public void getProduct() {
+//		List<Product> list = iProductDao.findAll();		
+//		System.out.println(list);
+//
+//	}
+	
+	
+	
+	
+	@Autowired
+	private ICustomerDao iCustomerDao;
+	
+	public void getAllCustomer() {
+		
+		List<Customer> list = iCustomerDao.findAll();
+		System.out.println(list);
+	}
+	
+	
+	
+}

@@ -1,0 +1,65 @@
+package in.ineuron.dbconfig.customer;
+
+import java.util.HashMap;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+	entityManagerFactoryRef= "db1EntityManagerFactory",
+	transactionManagerRef = "db1TransactionManager",
+	basePackages = "in.ineuron.repo.customer"
+)
+public class Db1Config {
+	
+	//DataSource Object
+	@Bean
+	@Primary
+	@ConfigurationProperties(prefix = "spring.datasource")
+	public DataSource db1Configuration() {
+		return DataSourceBuilder.create().build();
+	}
+
+	//EntityManagerFactory
+	@Bean
+	@Primary
+	public LocalContainerEntityManagerFactoryBean db1EntityManagerFactory(EntityManagerFactoryBuilder emfb) {
+		
+		HashMap<String, Object> properties = new HashMap<>();
+		properties.put("spring.jpa.hibernate.ddl-auto", "update");
+		properties.put("spring.jpa.database-platform", "org.hibernate.dialect.MySQL8Dialect");
+		properties.put("spring.jpa.show-sql", "true");
+		properties.put("spring.jpa.properties.hibernate.format_sql", "true");
+		properties.put("spring.jpa.properties.hibernate.packagesToScan","in.ineuron");
+		
+		
+		return emfb.dataSource(db1Configuration()).packages("in.ineuron").persistenceUnit("springrest").build();
+		
+		
+	}
+	
+	
+	// Transaction Management
+	@Bean
+	@Primary
+	public PlatformTransactionManager db1TransactionManager(@Qualifier("db1EntityManagerFactory") EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
+	}
+	
+	
+}

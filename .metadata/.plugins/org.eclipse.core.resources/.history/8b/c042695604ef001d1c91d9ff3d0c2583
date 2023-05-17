@@ -1,0 +1,79 @@
+package in.ineuron.dbconfig.customer;
+
+import java.util.HashMap;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+	entityManagerFactoryRef= "db1EntityManagerFactory",
+	transactionManagerRef = "db1TransactionManager",
+	basePackages = "in.ineuron.repo.customer"
+)
+public class Db1Config {
+	
+	
+	@Value("${spring.jpa.database-platform}")
+	private static String DIALECT; 
+	
+	@Value("${spring.jpa.hibernate.ddl-auto}")
+	private static String DDL_AUTO; 
+	
+	@Value("${spring.jpa.show-sql}")
+	private static String SHOW_SQL;
+	
+	@Value("${spring.jpa.properties.hibernate.packagesToScan}")
+	private static String PACKAGE_TO_SCAN;
+	
+	//DataSource Object
+	@Bean
+	@Primary
+	@ConfigurationProperties(prefix = "spring.datasource")
+	public DataSource db1Configuration() {
+		return DataSourceBuilder.create().build();
+	}
+
+	//EntityManagerFactory
+	@Bean
+	@Primary
+	public LocalContainerEntityManagerFactoryBean db1EntityManagerFactory(EntityManagerFactoryBuilder emfb) {
+		
+		HashMap<String, Object> properties = new HashMap<>();
+		properties.put("hibernate.hbm2ddl.auto", "update");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+		properties.put("hibernate.show-sql", "true");
+		properties.put("hibernate.format_sql", "true");
+		properties.put("hibernate.packagesToScan","in.ineuron");
+		
+		
+		return emfb.dataSource(db1Configuration()).packages("in.ineuron").persistenceUnit("springrest").build();
+		
+		
+	}
+	
+	
+	// Transaction Management
+	@Bean
+	@Primary
+	public PlatformTransactionManager db1TransactionManager(@Qualifier("db1EntityManagerFactory") EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
+	}
+	
+	
+}

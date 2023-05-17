@@ -1,0 +1,10 @@
+package in.ineuron.mail;
+
+import java.util.List;
+import java.util.Set;
+
+public interface IMailSender {
+	
+	public String mailSend(Set<String> mailIds);
+
+}

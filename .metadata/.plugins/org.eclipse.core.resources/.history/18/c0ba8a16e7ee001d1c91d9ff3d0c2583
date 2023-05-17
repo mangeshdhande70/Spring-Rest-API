@@ -1,0 +1,43 @@
+package in.ineuron.dbconfig;
+
+import java.util.HashMap;
+
+import javax.sql.DataSource;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+
+@Configuration
+public class Db1Config {
+	
+	
+	
+	//DataSource Object
+	@Bean
+	@ConfigurationProperties(value = "spring.datasource1")
+	public DataSource db1Config() {
+		return DataSourceBuilder.create().build();
+	}
+
+	
+	
+	//EntityManagerFactory
+	public LocalContainerEntityManagerFactoryBean db1EntityManagerFactory(EntityManagerFactoryBuilder emfb) {
+		
+		HashMap<String, Object> properties = new HashMap<>();
+		properties.put("hibernate.hbm2ddl", "update");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.formate_sql", "true");
+		
+		return emfb.dataSource(db1Config()).packages("in.ineuron").persistenceUnit("springrest").build();
+		
+		
+	}
+	
+	
+}

@@ -1,0 +1,17 @@
+package in.ineuron.model.product;
+
+import javax.persistence.Id;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Data;
+
+@Document(collection = "Product")
+@Data
+public class Product {
+	
+	@Id
+	private Long id;
+	private String productName;
+
+}

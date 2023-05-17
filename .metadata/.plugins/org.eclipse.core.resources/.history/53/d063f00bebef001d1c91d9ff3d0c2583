@@ -1,0 +1,36 @@
+package in.ineuron.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.ineuron.dao.IPersonDao;
+import in.ineuron.model.Person;
+import in.ineuron.model.PhoneNumber;
+
+@Service
+public class PersoneServiceImpl implements IPersoneService {
+	
+	@Autowired
+	private IPersonDao repo;
+
+	@Override
+	public Integer savePersonaDetails(Person person) {
+
+		Person person2 = repo.save(person);
+		return person2.getPId();
+	}
+
+	@Override
+	public List<Person> getAllPersonDetails() {	
+		return repo.findAll();
+	}
+
+	@Override
+	public Integer savePhoneNumberWithPersonDetails(Iterable<PhoneNumber> number) {
+		
+		return repo.save(person).getPId();
+	}
+
+}

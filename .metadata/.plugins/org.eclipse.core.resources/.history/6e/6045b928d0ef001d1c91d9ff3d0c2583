@@ -1,0 +1,11 @@
+package in.ineuron.dao;
+
+import javax.persistence.criteria.CriteriaBuilder.In;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.ineuron.model.Person;
+
+public interface IPersonDao extends JpaRepository<Person, Integer>{
+
+}

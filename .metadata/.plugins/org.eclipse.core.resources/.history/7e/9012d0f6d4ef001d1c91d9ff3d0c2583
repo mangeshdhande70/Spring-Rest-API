@@ -1,0 +1,21 @@
+package in.ineuron.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.ineuron.dao.IPersonDao;
+import in.ineuron.model.Person;
+
+@Service
+public class PersoneServiceImpl implements IPersoneService {
+	
+	@Autowired
+	private IPersonDao repo;
+
+	@Override
+	public Integer savePersonaDetails(Person person) {
+		Person person2 = repo.save(person);
+		return person2.getPId();
+	}
+
+}

@@ -1,0 +1,9 @@
+package in.ineuron.service;
+
+import in.ineuron.model.Person;
+
+public interface IPersoneService {
+	
+	public Integer savePersonaDetails(Person person);
+
+}

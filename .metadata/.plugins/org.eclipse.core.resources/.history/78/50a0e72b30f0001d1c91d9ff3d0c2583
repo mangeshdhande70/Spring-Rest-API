@@ -1,0 +1,5 @@
+package in.ineuron.mail;
+
+public interface IMailSender {
+
+}
